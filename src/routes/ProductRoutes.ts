@@ -11,4 +11,21 @@ router.get("/products", (req, res) => {
   res.status(200).json(productsList);
 });
 
+
+router.get("/products/:sku", (req, res) => {
+    const { sku } = req.params;
+    const product = InMemoryProducts[sku];
+    if (!product) {
+      res.status(404).json({ message: `Product with SKU '${sku}' not found.` });
+      return
+    }  
+
+    const productResponse = {
+        ...product,
+        globalWholesalePrice: (product.globalWholesalePrice / 100).toFixed(2)
+    };
+    
+    res.status(200).json(productResponse);
+})
+
 export default router;
