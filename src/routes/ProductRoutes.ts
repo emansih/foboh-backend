@@ -3,7 +3,7 @@ import { InMemoryProducts } from "../storage/InMemoryProducts";
 
 const router = Router();
 
-router.get("/products", (req, res) => {
+router.get("/", (req, res) => {
   const productsList = Object.values(InMemoryProducts).map((product) => ({
     ...product,
     globalWholesalePrice: (product.globalWholesalePrice / 100).toFixed(2),
@@ -12,7 +12,7 @@ router.get("/products", (req, res) => {
 });
 
 
-router.get("/products/:sku", (req, res) => {
+router.get("/:sku", (req, res) => {
     const { sku } = req.params;
     const product = InMemoryProducts[sku];
     if (!product) {
