@@ -12,20 +12,41 @@ router.get("/", (req, res) => {
 });
 
 
-router.get("/:sku", (req, res) => {
-    const { sku } = req.params;
-    const product = InMemoryProducts[sku];
-    if (!product) {
-      res.status(404).json({ message: `Product with SKU '${sku}' not found.` });
-      return
-    }  
+router.post("/search", (req, res) => {
+  const { searchQuery } = req.body;
 
-    const productResponse = {
-        ...product,
-        globalWholesalePrice: (product.globalWholesalePrice / 100).toFixed(2)
-    };
-    
-    res.status(200).json(productResponse);
+  let matchedProducts = [];
+
+  // 1. Search usingr SKU 
+  // 2. Search using wildcard
+  // 3. Make sure product in array is unique
+
+  const exactSkuMatch = Object.values(InMemoryProducts).find((product) => product.sku === searchQuery);
+  if (exactSkuMatch) {
+    matchedProducts.push(exactSkuMatch);
+  }
+
+
+  const uniqueProducts = Array.from(new Map(matchedProducts.map((product) => [product.sku, product])).values());
+
+  const wildcardRegex = new RegExp(searchQuery.replace(/\*/g, ".*"), "i");
+
+  const wildcardMatches = Object.values(InMemoryProducts).filter((product) =>
+      wildcardRegex.test(product.sku) || wildcardRegex.test(product.title)
+  );
+  wildcardMatches.forEach((product) => {
+    if (!uniqueProducts.some((p) => p.sku === product.sku)) {
+      uniqueProducts.push(product);
+    }
+  });
+
+  const productResponse = uniqueProducts.map((product) => ({
+    ...product,
+    globalWholesalePrice: (product.globalWholesalePrice / 100).toFixed(2),
+  }));
+
+
+  res.status(200).json(productResponse);
 })
 
 export default router;

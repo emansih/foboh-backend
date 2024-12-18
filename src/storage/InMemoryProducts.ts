@@ -1,4 +1,4 @@
-import { Products } from "../model/products";
+import { Products } from "../model/Products";
 
 // Assuming price is in AUD, set the price to lowest unit - cents
 export let InMemoryProducts: Record<string, Products> = {
