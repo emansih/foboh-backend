@@ -14,9 +14,7 @@ router.post("/calculate", (req, res) => {
   
     const updatedProducts = getUpdatedPrices(incrementType, adjustmentType, productsToBeAdjusted);
   
-    res.status(200).json({
-      updatedProducts,
-    });
+    res.status(200).json(updatedProducts);
 });
 
 export default router;
