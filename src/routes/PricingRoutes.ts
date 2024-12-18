@@ -7,8 +7,7 @@ const router = Router();
 router.post("/calculate", (req, res) => {
     const { incrementType, adjustmentType, productsToBeAdjusted } = req.body;
 
-    if (!incrementType || !adjustmentType || !productsToBeAdjusted || (adjustmentType !== "Fixed" && adjustmentType !== "Dynamic") ||
-      (incrementType !== "Increase" && incrementType !== "Decrease")) {
+    if (!incrementType || !adjustmentType || !productsToBeAdjusted) {
       res.status(400).json({ message: "Invalid input parameters." });
       return
     }
