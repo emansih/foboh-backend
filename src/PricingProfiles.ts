@@ -1,20 +1,19 @@
-export const calculateNewPrice = (basedOnPrice: number, adjustment: number, 
+export const calculateNewPrice = (priceToAdjust: number, oldPrice: number,
   priceAdjustment: "Fixed" | "Dynamic", increment: "Increase" | "Decrease"): number => {
-  let newPriceCents = basedOnPrice;
+
   let adjustmentCents = 0
+  let newPriceCents = 0 
   if (priceAdjustment === "Fixed") {
-    adjustmentCents = adjustment * 100;
-  } else if (priceAdjustment === "Dynamic") {
-    adjustmentCents = (basedOnPrice * adjustment) / 100; 
+    adjustmentCents = priceToAdjust * 100;
+  } else if(priceAdjustment === "Dynamic"){
+    adjustmentCents = priceToAdjust * 100;
   }
-
   if(increment == "Increase"){
-      newPriceCents = basedOnPrice + adjustmentCents
-  } else if(increment == "Decrease"){
-      newPriceCents = basedOnPrice - adjustmentCents
+    newPriceCents = oldPrice + adjustmentCents
+  }  else if(increment == "Decrease"){
+    newPriceCents = oldPrice - adjustmentCents
   }
-
-  // Ensure price doesn't go below zero
+  
   return Math.max(newPriceCents, 0);
-  };
+};
   

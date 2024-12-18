@@ -53,3 +53,15 @@ export let InMemoryProducts: Record<string, Products> = {
     globalWholesalePrice: 40932,
   },
 };
+
+export function getProductById(productId: string): Products {
+  return InMemoryProducts[productId]
+}
+
+export function getPriceById(productId: string): number{
+  return InMemoryProducts[productId].globalWholesalePrice
+}
+
+export function setPriceById(productId: string, newPrice: number){
+  InMemoryProducts[productId].globalWholesalePrice = newPrice
+}
