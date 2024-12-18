@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", (req, res) => {
   const productsList = Object.values(InMemoryProducts).map((product) => ({
     ...product,
-    globalWholesalePrice: (product.globalWholesalePrice / 100).toFixed(2),
+    globalWholesalePrice: product.globalWholesalePrice,
   }));
   res.status(200).json(productsList);
 });
@@ -42,7 +42,7 @@ router.post("/search", (req, res) => {
 
   const productResponse = uniqueProducts.map((product) => ({
     ...product,
-    globalWholesalePrice: (product.globalWholesalePrice / 100).toFixed(2),
+    globalWholesalePrice: product.globalWholesalePrice,
   }));
 
 
