@@ -1,18 +1,30 @@
-import { Products } from "../model/Products";
+import { UpdatedProducts } from "../model/UpdatedProducts";
 import { calculateNewPrice } from "../PricingProfiles";
 import { getPriceById, getProductById, setPriceById } from "../storage/InMemoryProducts";
 
 
 export function getUpdatedPrices(incrementType: "Fixed" | "Dynamic", adjustmentType: "Increase" | "Decrease", 
     productsToBeAdjusted: { id: string; adjustment: number }[]){
-        const products: Products[] = []    
+        const products: UpdatedProducts[] = []    
         productsToBeAdjusted.map(product => {
             const priceToBeAdjusted = product.adjustment
             if(priceToBeAdjusted > 0){
-                const productPrice = getPriceById(product.id)
-                const newPrice = calculateNewPrice(priceToBeAdjusted, productPrice, incrementType, adjustmentType)
+                const oldPrice = getPriceById(product.id)
+                const newPrice = calculateNewPrice(priceToBeAdjusted, oldPrice, incrementType, adjustmentType)
                 setPriceById(product.id, newPrice)
-                products.push(getProductById(product.id))
+                const updatedProduct = getProductById(product.id)
+
+                products.push({
+                    id: updatedProduct.id,
+                    title: updatedProduct.title,
+                    sku: updatedProduct.sku,
+                    brand: updatedProduct.brand,
+                    category: updatedProduct.category,
+                    subcategory: updatedProduct.subcategory,
+                    segmentId: updatedProduct.subcategory,
+                    oldWholeSalePrice: oldPrice,
+                    newWholeSalePrice: newPrice
+                })
             }
         })
     return products
