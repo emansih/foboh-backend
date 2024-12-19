@@ -9,7 +9,7 @@ This is the backend application for FOBOH take home assignment written in typesc
 - Swagger documentation tools
 
 ## Running the software
-To run this software, make sure you have NodeJS installed. 
+To run this software, make sure you have npm installed. 
 
 
 To run this software locally, 
