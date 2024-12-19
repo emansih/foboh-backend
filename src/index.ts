@@ -11,8 +11,8 @@ app.use(express.json());
 const port = 3000
 
 
-app.use("/products", productsRouter);
-app.use("/pricing", pricingRouter);
+app.use("/api/v1/products", productsRouter);
+app.use("/api/v1/pricing", pricingRouter);
 
 app.listen(port, () => {
 
