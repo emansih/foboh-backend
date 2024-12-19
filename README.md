@@ -33,4 +33,4 @@ In the future, I could return currency code, symbol and decimal places(if the cu
 
 - I did not use enums for adjustment modes and types, instead I use typescript strings for checking. This could be improved as I repeated code in a number of places. 
 
-- I used Postman to manually test the API requests and responses. This could be improved by adding unit tests
+- I used Postman to manually test the API requests and responses. This could be improved by adding more unit tests
